@@ -2,7 +2,7 @@
 
 A prototype system that automatically collects, processes, and prioritises open-source threat intelligence from The Guardian Open Platform, using NLP and a composite risk-scoring model.
 
-Built as a technical assessment for a KTP (Knowledge Transfer Partnership) Associate role at the University of Wolverhampton.
+Built as a technical assessment for a KTP (Knowledge Transfer Partnership) Associate role at the University of West London (Ref: COMP0092).
 
 ---
 
@@ -242,4 +242,4 @@ See Section 8 of the notebook and Section VII of the report for a full discussio
 ## Author
 
 Sina Ebrahimi  
-University of Wolverhampton — KTP Associate Technical Assessment, 2026
+University of West London / B3 Secure — KTP Associate Technical Assessment, 2026

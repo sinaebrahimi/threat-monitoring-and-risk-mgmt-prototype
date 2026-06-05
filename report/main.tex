@@ -78,7 +78,7 @@ Open-Source Intelligence, threat intelligence, Natural Language Processing, Name
 \label{sec:intro}
 % 
 
-\IEEEPARstart{T}{he} volume of publicly available threat-relevant information has grown, spanning news outlets, government advisories, social media, and technical vulnerability databases~\cite{li2023osint}. Analysts monitoring these channels face a severe bottleneck: filtering signal from noise in near-real time is cognitively demanding and error-prone~\cite{zhu2018threat}. Artificial Intelligence (AI) methods, particularly Natural Language Processing (NLP), can support collection, triage, and risk scoring while preserving the interpretability required by operational security teams.
+\IEEEPARstart{T}{he} volume of publicly available threat-relevant information has grown, spanning news outlets, government advisories, social media, and technical vulnerability databases~\cite{comst23sun,Yadav2023}. Analysts monitoring these channels face a severe bottleneck: filtering signal from noise in near-real time is cognitively demanding and error-prone~\cite{zhu2018threat}. Artificial Intelligence (AI) methods, particularly Natural Language Processing (NLP), can support collection, triage, and risk scoring while preserving the interpretability required by operational security teams.
 
 This report presents a prototype that combines standard NLP and classification methods within an Open-Source Intelligence (OSINT) pipeline. The system uses a single open news source, applies several processing stages (cleaning, Named Entity Recognition (NER), classification, and scoring), and ranks the highest-risk articles for analyst review. The emphasis is on design choices and technical trade-offs rather than production hardening. To support reproducibility, the accompanying public GitHub repository includes the notebook, source code, and generated artefacts: \url{https://github.com/sinaebrahimi/threat-monitoring-and-risk-mgmt-prototype}.
 
@@ -97,7 +97,7 @@ This report presents a prototype that combines standard NLP and classification m
 
 Early OSINT systems relied on keyword matching and Really Simple Syndication (RSS) aggregation~\cite{Schaurer2010}. Recent NER methods based on Bidirectional Encoder Representations from Transformers (BERT)~\cite{devlin2019bert} have improved entity extraction from unstructured text. Platforms such as \emph{Open Cyber Threat Intelligence (OpenCTI)}~\cite{opencti2021} and \emph{Malware Information Sharing Platform (MISP)}~\cite{misp2016} formalise threat intelligence sharing, but still rely on analysts to populate structured records, preserving a manual bottleneck.
 
-Zero-shot text classification~\cite{yin2019benchmark}, which uses NLI models to score hypotheses without task-specific training, has also been applied to security triage~\cite{brown2023zeroshot}. Risk quantification approaches range from Common Vulnerability Scoring System (CVSS)-style ordinal scales~\cite{cvss2019} to learned regression models trained on labelled incident datasets. This report draws on these strands while remaining lightweight: the objective is a prototype that practitioners can inspect and tune, rather than a black-box model optimised only for benchmark accuracy.
+Zero-shot text classification~\cite{yin2019benchmark} uses NLI models to score label hypotheses without task-specific training, making it suitable for rapid triage when labelled security data are scarce. Risk quantification approaches range from Common Vulnerability Scoring System (CVSS)-style ordinal scales~\cite{cvss2019} to learned regression models trained on labelled incident datasets. This report draws on these strands while remaining lightweight: the objective is a prototype that practitioners can inspect and tune, rather than a black-box model optimised only for benchmark accuracy.
 
 % 
 \section{System Architecture}
@@ -161,8 +161,8 @@ Table~\ref{tab:queries} lists the 15 threat-oriented query terms. For each term,
 \toprule
 \textbf{Category} & \textbf{Query terms} \\
 \midrule
-Cyber & ransomware, data breach, malware, phishing, \\
-      & Distributed Denial of Service (DDoS) attack, zero-day vulnerability, supply chain attack \\
+Cyber & cyberattack, ransomware, data breach, malware, zero-day vulnerability, phishing,\\
+      & supply chain attack , Distributed Denial of Service (DDoS) attack \\
 Geopolitical & espionage, nation state hacking, cyber warfare \\
 Terrorism & terrorism \\
 Disinformation & disinformation, information warfare \\
