@@ -1,0 +1,178 @@
+                                   Job Description
+Job title                    AI Scientist (KTP Associate)
+School / department          School of Computing and Engineering (SCE)
+Salary                       £40,834 per annum
+Line manager                 Professor of Computing
+Responsible for (direct      N/A
+reports)
+Date of creation or          13/04/2026
+review
+
+Main purpose of the job
+The University of West London (UWL), in partnership with B4 Secure Limited, is seeking an AI
+Scientist (KTP Associate) to deliver an exciting new Innovate UK-funded Knowledge Transfer
+Partnership (KTP). This interdisciplinary and technically advanced project requires a highly
+capable individual with strong theoretical grounding in Artificial Intelligence, computer science, or
+a related discipline. Prior industrial experience is not required.
+Working primarily remotely, the KTP Associate will lead the design and implementation of an
+AI-driven threat intelligence software system that automates Open-Source Intelligence (OSINT)
+threat monitoring and risk assessment. The project aims to transform the business partner’s
+currently manual workflows into an efficient, scalable, adaptive, and ethically aligned AI platform
+that enhances operational performance and supports sustainable business growth.
+This role offers an outstanding career-development opportunity to manage a high-impact KTP
+project while being fully supported by an experienced team of academic and industry experts in
+AI, data science, cyber security, threat intelligence and ethical AI.
+There is strong potential for the successful candidate to transition into a permanent role within B4
+Secure, becoming a key member of the team, subject to performance and business needs
+This is a primarily remote role; however, the successful candidate will be expected to attend in-
+person meetings in London for project collaboration and stakeholder engagement. Applicants
+should be located within a reasonable commuting distance to facilitate attendance when needed
+Reasonable travel expenses will be covered.
+This post is fixed-term for 24 months. The salary for the Associate is set to £40,834 p.a., aligned
+with market rates for Graduate AI Scientist/Engineer remote working roles in London.
+
+
+Key areas of responsibility
+Working closely with the business partner supervisors at B4 Secure and supported by the UWL
+academic team, the KTP Associate will lead the design and implementation of an AI‑driven threat
+intelligence software system that automates OSINT threat monitoring and risk assessment. The
+key duties and responsibilities of the KTP Associate include:
+Technical research and development
+    • Investigate state-of-the-art agentic AI (e.g., agent-based architectures, NLP, data-driven
+        decision systems) and translate findings into robust system designs; apply advanced
+        Python programming for prototyping and production-quality system.
+    • Design and implement an Agentic-AI system to autonomously identify, analyse and
+        contextualise threats across surface, deep, and dark-web sources.
+
+    Version 2020                                                                  Page 1 of 5
+   •   Ensure that all technical development aligns with commercial objectives and client needs,
+       maintaining a focus on delivering practical, high-value outcomes
+Responsible and ethical AI
+    • Embed explainability, bias mitigation, transparency and trust into the system’s design and
+       evaluation, working with academic experts to operationalise ethical requirements.
+Testing and commercial readiness
+    • Plan and execute system functionality/performance testing and commercial-viability
+       assessments; define metrics, evaluate results and iterate features accordingly
+    • Prepare and deliver client demonstrations, capture structured feedback, assess
+       usability/user experience, and prioritise improvements that strengthen product-market fit
+Adoption, training and stakeholder engagement
+    • Introduce AI-driven automation into existing workflows; address resistance to change, build
+       trust in AI outputs and ensure smooth adoption through stakeholder training and
+       engagement
+    • Maintain effective relationships with business, academic and external stakeholders
+       (including pilot users) throughout the project lifecycle
+Project and risk management
+    • Manage tasks, timelines and deliverables in line with the project workplan; coordinate
+       regular supervision (weekly engagement with the business and academic supervision) and
+       lead monthly project progress meetings
+    • Identify and manage risks associated with emerging technologies and evolving
+       requirements, adapting plans while staying focused on project objectives
+Knowledge transfer, documentation and academic outputs
+    • Produce clear technical documentation (architecture, pipelines, SOPs) and maintain
+       repositories to embed capability within B4 Secure beyond the project’s lifetime
+    • Prepare technical/analytical reports and contribute to planned joint academic publications
+       and presentations
+Working practices and stakeholder engagement
+    • Operate effectively in a remote-first environment, managing time, priorities, and outputs
+       with a high degree of autonomy
+    • Communicate complex technical concepts clearly to both technical and non-technical
+       stakeholders, including clients
+    • Engage professionally with clients during demonstrations, feedback sessions, and product
+       development activities
+    • Collaborate effectively with academic and business teams to ensure successful project
+       delivery
+    • To work in accordance with UWL’s Equality, Diversity, and Inclusion policies.
+In addition to the above areas of responsibility the post-holder may be required to undertake any
+other reasonable duties relating to the broad scope of the position, commensurate with the post,
+and in support of the University.
+
+Dimensions / background information
+The School of Computing and Engineering is a professional and student focused School with high
+quality teaching, student experience and research informed teaching at the top of its priority list.
+The School has strong links with local, national and international partners and enjoys state-of-the-
+art equipment and continues to invest heavily in its improvement.
+B4 Secure works as a trusted advisor to businesses and government departments, delivering a
+full range of intelligence services that not only address security challenges but also help clients
+navigate broader organisational risks.
+
+
+       Version 2020                                                              Page 2 of 5
+The School of Computing and Engineering at the University of West London (UWL) in partnership
+with B4 Secure Limited is delivering an exciting new Innovate UK-funded Knowledge Transfer
+Partnership (KTP).
+
+
+
+
+    Version 2020                                                           Page 3 of 5
+                               Person Specification
+                                 Criteria                Essential or        Demonstrated2
+                                                          Desirable1    Application    Interview    Test /
+                                                                                                   Exercise
+
+                    Advanced degree (Masters or          Essential          x
+   Qualifications   PhD) in machine learning,
+and/or membership computer Science, statistics,
+  of prof. bodies   mathematics, or a related
+                    subject
+                    Strong knowledge of AI and           Essential          x             x           x
+  Knowledge and     ML concepts, with experience
+    experience      applying NLP and data-driven
+                    approaches to the design of
+                    applied AI systems, including
+                    agentic AI methodologies
+                    Demonstrated ability to design,      Essential          x             x           x
+ Specific skills to implement, and maintain AI/ML
+      the job       system using Python, including
+                    data pipelines, model
+                    integration, experimentation
+                    and evaluation workflows
+                    Excellent written and verbal         Essential          x             x           x
+   General skills   communication skills, with the
+                    ability to clearly articulate
+                    complex ideas in English
+                    Strong organisational skills         Essential          x             x
+                    with the ability to manage
+                    workload and deliver the
+                    project and outcomes in a
+                    remote working environment
+                    Strong interpersonal skills and      Essential                        x
+                    the ability to build relationships
+                    with colleagues and
+                    stakeholders
+                    Awareness and understanding          Desirable                        x
+                    of the commercial drivers
+                    Ability to work independently        Essential          x             x
+                    while contributing effectively to
+                    a multidisciplinary team
+                    Ability to engage confidently in     Desirable                        x
+                    client-facing interactions
+                    Ability to obtain and maintain       Essential          x             x
+       Other        UK security clearance (e.g.
+                    BPSS/SC level) is required for
+                    this role. Candidates must be
+                    willing to undertake enhanced
+                    screening and vetting checks
+
+
+    Version 2020                                                                      Page 4 of 5
+Disclosure and Barring Scheme Is a DBS Check required:                     DBS This post requires a standard DBS check
+Before making a selection, please refer to the University’s Disclosure and Barring Checks Guidance for Staff and Criminal Convictions,
+Disclosures and Barring Staff Policy and Procedure. If a DBS check is required for the role, a Check Approval Form will need to be
+completed.
+1
+ Essential Criteria are those, without which, a candidate would not be able to do the job. Applicants who have not clearly demonstrated in
+their application that they possess the essential requirements will normally be rejected at the shortlisting stage.
+Desirable Criteria are those that would be useful for the post holder to possess and will be considered when more than one applicant meets
+the essential requirements, to determine which applicants to shortlist.
+2
+  Demonstration: Select the Recruitment Process stage at which the candidates will have to demonstrate that they meet the criteria. Criteria
+which have to be demonstrated at application stage should be mentioned in the Recruitment Information Pack as Pre-Selection/Killer
+Questions, Shortlisting Questions or Shortlisting Criteria. Other criteria should be evaluated and tested at interview stage (e.g. through
+interview questions) or through additional tests, exercises or presentations. Criteria can (and should) be demonstrated at multiple stages.
+
+
+
+
+       Version 2020                                                                                                    Page 5 of 5
+

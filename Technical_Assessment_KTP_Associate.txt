@@ -1,0 +1,116 @@
+                        Technical Assessment Task
+
+
+
+Title
+Design an AI-Driven OSINT Threat Monitoring and Risk Assessment Prototype
+
+
+Background
+The KTP project aims to develop an AI-based intelligence system to automate
+open-source intelligence (OSINT) collection, analysis, and risk assessment to
+support proactive threat monitoring.
+As part of the KTP Associate role, the successful candidate will be expected to
+design scalable and intelligent solutions that combine:
+  • AI / machine learning
+  • Cyber security knowledge
+  • Structured and unstructured data analysis
+
+
+Task overview
+You are asked to design a prototype solution for an AI-driven OSINT threat
+monitoring system.
+Your solution should demonstrate how open-source data can be:
+  • Collected
+  • Processed
+  • Analysed
+  • Used to generate actionable threat intelligence
+The project does not need to be production-ready. The focus is on your technical
+reasoning, problem-solving approach, and ability to communicate your design
+decisions clearly.
+
+
+Suggested public datasets / data sources
+Candidates may use any suitable public datasets or open-source data sources.
+Recommended sources include:
+News & OSINT sources
+  • NewsAPI: https://newsapi.org/
+  • Google News RSS: https://news.google.com/rss
+
+
+                                       1
+  • The Guardian Open Platform: https://open-platform.theguardian.com/
+Cyber security & threat intelligence sources
+  • CISA Cybersecurity Advisories: https://www.cisa.gov/news-events/cybersecurity-
+    advisories
+  • MITRE ATT&CK Framework: https://attack.mitre.org/
+  • CVE Vulnerability Database: https://www.cve.org/
+Candidates may also use other publicly available sources where appropriate.
+
+
+Specific project requirements
+
+1. System design
+Propose an architecture for the system (diagram encouraged), including:
+  • Data sources
+  • Data ingestion methods
+  • Storage and processing pipeline
+
+2. AI / Analytical approach
+Describe methods used to:
+  • Detect relevant threats
+  • Extract key entities or signals
+  • Assess threat severity or risk levels
+
+3. Prototype / Demonstration (Lightweight)
+Provide a small-scale implementation or pseudo-code, workflow, or sample
+outputs. This is flexible and subject to your understanding and capability.
+Examples may include:
+  • A simple script
+  • Pipeline design
+  • Sample outputs
+  • Notebook or prototype
+
+4. Risk assessment framework
+Propose a method to:
+  • Prioritise threats
+
+
+
+                                       2
+   • Assess risk levels
+   • Generate a simple “threat report” output
+
+5. Discussion of key considerations
+Briefly reflect on:
+   • Data quality and limitations
+   • Ethical and legal considerations
+   • Scalability and deployment challenges
+   • Potential future improvements
+
+
+Project deliverables
+
+1. Written report
+Please prepare a report of a maximum of 10 pages (Please do not exceed this
+limit) covering:
+   • System design and architecture
+   • Methodology and technical approach
+   • AI / analytical methods used
+   • Risk assessment framework
+   • Key assumptions and limitations
+   • Potential future improvements
+
+2. Presentation
+During the interview, please prepare a short presentation (max 10 minutes)
+summarising:
+   • Your understanding of the problem
+   • Proposed solution and architecture
+   • Key technical decisions
+   • Main findings, limitations, and future improvements
+
+
+
+
+                                        3
+
