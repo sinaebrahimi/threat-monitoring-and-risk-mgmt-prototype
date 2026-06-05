@@ -1,14 +1,14 @@
-\documentclass[12pt,lettersize,journal,onecolumn]{IEEEtran}
+\documentclass[11pt,lettersize,journal,onecolumn]{IEEEtran}
 
-% ── Spacing & text ────────────────────────────────────────────────────────────
+% Spacing and text
 \usepackage{setspace}
 \doublespacing
 \usepackage{soul,xcolor}
 
-% ── Math ─────────────────────────────────────────────────────────────────────
+% Math
 \usepackage{amsmath,amssymb,amsfonts}
 
-% ── Figures & tables ─────────────────────────────────────────────────────────
+% Figures and tables
 \usepackage[caption=false,font=normalsize,labelfont=rm,textfont=rm]{subfig}
 \usepackage{graphicx}
 \graphicspath{{../outputs/}}
@@ -18,7 +18,7 @@
 \usepackage{array}
 \usepackage{caption}
 
-% ── Code listings ─────────────────────────────────────────────────────────────
+% Code listings
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily\small,
@@ -29,20 +29,20 @@
   commentstyle=\color{gray},
 }
 
-% ── References & links ────────────────────────────────────────────────────────
+% References and links
 \usepackage{cite}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
 
-% ── TikZ for architecture diagram ─────────────────────────────────────────────
+% TikZ for architecture diagram
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
 
-% ── Misc ──────────────────────────────────────────────────────────────────────
+% Misc
 \usepackage{enumitem}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 % TikZ styles
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \tikzset{
   box/.style={rectangle, rounded corners=4pt, draw=#1!70, fill=#1!15,
               text width=3.0cm, align=center, minimum height=0.9cm, font=\small},
@@ -51,127 +51,76 @@
                    dashed, fill=gray!5, inner sep=8pt},
 }
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
 \begin{document}
 
-\title{An AI-Driven OSINT Threat Monitoring and Risk Assessment Prototype}
+\title{AI-Driven OSINT Threat Monitoring and Risk Assessment: A Guardian Open Platform Case Study}
 
-\author{Sina~Ebrahimi%
-  \thanks{Technical assessment submitted for the KTP Associate (AI Scientist)
-  role, University of West London, UK\@.
-  E-mail: \texttt{sina.ebrahimi@wlv.ac.uk}}}
+\author{Sina~Ebrahimi\thanks{Technical assessment submitted for the KTP Associate (AI Scientist) role (Ref: COMP0092, App No: 71041), University of West London, UK\@. E-mail: \texttt{ebrahimis@coventry.ac.uk}}}
 
-\markboth{KTP Associate Technical Assessment, 2026}{}
+\markboth{KTP Associate (AI Scientist) Technical Assessment, June 2026}{}
 
 \maketitle
+\vspace{-2.0\baselineskip}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \begin{abstract}
-Open-source intelligence (OSINT) collection and analysis is central to
-proactive cyber threat monitoring, yet manual curation of news and advisory
-feeds does not scale. This paper presents a prototype AI-driven OSINT pipeline
-that ingests publicly available news articles from \emph{The Guardian Open
-Platform}, applies multi-stage natural language processing (NLP) to classify
-threats and extract key entities, and computes a composite risk score to
-prioritise intelligence items. The system combines a keyword-based threat
-taxonomy with a zero-shot natural language inference (NLI) classifier and VADER
-sentiment analysis, producing ranked threat reports without requiring labelled
-training data. Over a six-month corpus of 1,228 unique articles, the pipeline
-produces interpretable per-category intelligence briefs, achieves approximately
-75\% agreement between keyword and NLI classification on the top-50 articles,
-and surfaces a mean risk score of 5.09 out of 10, with 63 Critical and 290 High
-severity items. Key limitations, including single-source coverage, English-only
-processing, and hand-tuned scoring weights, motivate a clear roadmap toward a
-production-grade, agentic threat intelligence system.
+Open-Source Intelligence (OSINT) collection and analysis are central to proactive cyber threat monitoring, yet the manual curation of news and advisory feeds cannot scale. This report presents a prototype that uses Artificial Intelligence (AI) to support an OSINT pipeline. The pipeline ingests publicly available news articles from the Guardian Open Platform Application Programming Interface (API), applies multi-stage Natural Language Processing (NLP) to classify threats and extract key entities, and computes a composite risk score to prioritise intelligence items. The system combines a keyword-based threat taxonomy with a zero-shot Natural Language Inference (NLI) classifier and Valence Aware Dictionary and Sentiment Reasoner (VADER) sentiment analysis, producing ranked threat reports without requiring labelled training data. Across a six-month corpus of 1,228 unique articles, the pipeline produces interpretable per-category intelligence briefs, achieves approximately 75\% agreement between keyword and NLI classification on the top 50 articles, and reports a mean risk score of 5.09 out of 10, with 63 Critical and 290 High severity items. The results also highlight the main constraints of the prototype: single-source coverage, English-only processing, and hand-tuned scoring weights.
 \end{abstract}
 
 \begin{IEEEkeywords}
-OSINT, threat intelligence, NLP, named entity recognition, zero-shot
-classification, risk scoring, cyber security, Guardian API.
+Open-Source Intelligence, threat intelligence, Natural Language Processing, Named Entity Recognition, zero-shot classification, risk scoring, cyber security, Guardian Open Platform.
 \end{IEEEkeywords}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Introduction}
 \label{sec:intro}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
-\IEEEPARstart{T}{he} volume of publicly available threat-relevant information
-has grown substantially, spanning news outlets, government advisories, social
-media, and technical vulnerability databases~\cite{li2023osint}. Security
-analysts who monitor these channels manually face a severe bottleneck: filtering
-signal from noise in near-real time is cognitively demanding and prone to
-error~\cite{zhu2018threat}. AI methods, particularly NLP, offer a principled
-path to automating collection, triage, and risk scoring, while preserving the
-interpretability that operational security teams require.
+\IEEEPARstart{T}{he} volume of publicly available threat-relevant information has grown, spanning news outlets, government advisories, social media, and technical vulnerability databases~\cite{li2023osint}. Analysts monitoring these channels face a severe bottleneck: filtering signal from noise in near-real time is cognitively demanding and error-prone~\cite{zhu2018threat}. Artificial Intelligence (AI) methods, particularly Natural Language Processing (NLP), can support collection, triage, and risk scoring while preserving the interpretability required by operational security teams.
 
-This paper describes a prototype designed to show that foundational AI
-techniques can be combined into a coherent OSINT pipeline. The system targets
-a single high-quality open news source, applies progressively richer NLP
-stages (cleaning, NER, classification, scoring), and surfaces the
-highest-risk articles as actionable threat intelligence items. The focus is on
-sound technical reasoning and clear design decisions, not production hardening.
+This report presents a prototype that combines standard NLP and classification methods within an Open-Source Intelligence (OSINT) pipeline. The system uses a single open news source, applies several processing stages (cleaning, Named Entity Recognition (NER), classification, and scoring), and ranks the highest-risk articles for analyst review. The emphasis is on design choices and technical trade-offs rather than production hardening. To support reproducibility, the accompanying public GitHub repository includes the notebook, source code, and generated artefacts: \url{https://github.com/sinaebrahimi/threat-monitoring-and-risk-mgmt-prototype}.
 
-\subsection*{Contributions}
+\subsection{Contributions}
 \begin{enumerate}[leftmargin=*,noitemsep]
-  \item A complete OSINT ingestion and enrichment pipeline using freely
-        available APIs and CPU-only models, validated over 1,228 deduplicated
-        articles spanning six months.
-  \item A two-stage threat classifier combining fast keyword rules with
-        zero-shot NLI, requiring no labelled training data.
-  \item A composite, interpretable risk-scoring formula integrating keyword
-        density, sentiment, recency, and entity richness across five threat
-        categories.
-  \item A critical discussion of limitations, ethical considerations, and
-        a scalability roadmap including a path toward agentic AI architectures.
+  \item A complete OSINT ingestion and enrichment pipeline that uses freely available Application Programming Interface (API) access and CPU-only models, validated on 1,228 deduplicated articles spanning six months.
+  \item A two-stage threat classifier that combines fast keyword rules with zero-shot Natural Language Inference (NLI) and requires no labelled training data.
+  \item A composite and interpretable risk-scoring formula that integrates keyword density, sentiment, recency, and entity richness across five threat categories.
+  \item A critical discussion of limitations, ethical considerations, and deployment steps for multi-source and analyst-in-the-loop extensions.
 \end{enumerate}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Related Work}
 \label{sec:related}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
-Early OSINT systems relied on keyword matching and RSS feed
-aggregation~\cite{Schaurer2010}. The emergence of deep learning-based NER
-built on BERT~\cite{devlin2019bert} substantially improved entity extraction
-quality on unstructured text. Platforms such as
-\emph{OpenCTI}~\cite{opencti2021} and \emph{MISP}~\cite{misp2016} formalise
-threat intelligence sharing but rely on human analysts to populate structured
-records, creating exactly the bottleneck that automated pipelines aim to reduce.
+Early OSINT systems relied on keyword matching and Really Simple Syndication (RSS) aggregation~\cite{Schaurer2010}. Recent NER methods based on Bidirectional Encoder Representations from Transformers (BERT)~\cite{devlin2019bert} have improved entity extraction from unstructured text. Platforms such as \emph{Open Cyber Threat Intelligence (OpenCTI)}~\cite{opencti2021} and \emph{Malware Information Sharing Platform (MISP)}~\cite{misp2016} formalise threat intelligence sharing, but still rely on analysts to populate structured records, preserving a manual bottleneck.
 
-Zero-shot text classification~\cite{yin2019benchmark}, which uses NLI models
-to score hypotheses without task-specific training, has been applied to
-security triage~\cite{brown2023zeroshot}. Risk quantification approaches range
-from CVSS-style ordinal scales~\cite{cvss2019} to learned regression models
-over labelled incident datasets. The present work draws on all of these strands
-while remaining deliberately lightweight: the objective is a deployable prototype
-that a practitioner can inspect and tune, not a black-box model with marginally
-higher benchmark accuracy.
+Zero-shot text classification~\cite{yin2019benchmark}, which uses NLI models to score hypotheses without task-specific training, has also been applied to security triage~\cite{brown2023zeroshot}. Risk quantification approaches range from Common Vulnerability Scoring System (CVSS)-style ordinal scales~\cite{cvss2019} to learned regression models trained on labelled incident datasets. This report draws on these strands while remaining lightweight: the objective is a prototype that practitioners can inspect and tune, rather than a black-box model optimised only for benchmark accuracy.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{System Architecture}
 \label{sec:arch}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
-Fig.~\ref{fig:arch} shows the five-stage pipeline. Each stage is implemented
-as an independent Python module, enabling components to be swapped or upgraded
-without rewriting the rest of the system.
+Fig.~\ref{fig:arch} shows the five-stage pipeline. Each stage is implemented as an independent Python module, so components can be swapped or upgraded without rewriting the rest of the system. The pipeline uses three main data formats: JavaScript Object Notation (JSON), HyperText Markup Language (HTML), and Comma-Separated Values (CSV).
 
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[node distance=0.6cm and 0.45cm]
-  \node[box=blue]   (ingest)  {1.\ Ingestion\\Guardian API};
-  \node[box=teal,   right=of ingest]  (prep)  {2.\ Preprocessing\\HTML strip \& clean};
-  \node[box=violet, right=of prep]    (ner)   {3.\ NER\\spaCy entities};
-  \node[box=orange, right=of ner]     (cls)   {4.\ Classification\\Keyword + ZS-NLI};
-  \node[box=red!70!black, right=of cls] (score) {5.\ Risk Scoring\\Composite score};
+  \node[box=blue]   (ingest)  {\textbf{1.\ Ingestion}\\Guardian API};
+  \node[box=teal,   right=of ingest]  (prep)  {\textbf{2.\ Preprocessing}\\HTML strip \& clean};
+  \node[box=violet, right=of prep]    (ner)   {\textbf{3.\ NER}\\spaCy entities};
+  \node[box=orange, right=of ner]     (cls)   {\textbf{4.\ Classification}\\Keyword + NLI};
+  \node[box=red!70!black, right=of cls] (score) {\textbf{5.\ Risk Scoring}\\Composite score};
 
   \draw[arrow=black] (ingest) -- (prep);
   \draw[arrow=black] (prep)   -- (ner);
   \draw[arrow=black] (ner)    -- (cls);
   \draw[arrow=black] (cls)    -- (score);
 
-  \node[box=gray, below=0.8cm of score] (report) {Threat Report\\\texttt{.csv / .json}};
+  \node[box=gray, below=0.8cm of score] (report) {\textbf{Threat Report}\\\texttt{.csv / .json}};
   \draw[arrow=gray] (score) -- (report);
 
   \node[font=\scriptsize, below=0.15cm of ingest] {raw JSON};
@@ -181,56 +130,28 @@ without rewriting the rest of the system.
 \label{fig:arch}
 \end{figure}
 
-\textbf{Stage 1 (Ingestion).}
-A \texttt{GuardianCollector} class queries the Guardian \texttt{/search}
-endpoint across 15 threat-relevant terms with a six-month date window.
-Articles are deduplicated by canonical ID and persisted as raw JSON, supporting
-offline re-runs without repeated API calls.
+\textbf{Stage 1 (Ingestion):} A \texttt{GuardianCollector} class queries the Guardian \texttt{/search} endpoint across 15 threat-relevant terms over a six-month date window. Articles are deduplicated by Guardian content ID and persisted as raw JSON, supporting offline re-runs without repeated API calls.
 
-\textbf{Stage 2 (Preprocessing).}
-Article bodies arrive as HTML; BeautifulSoup with an lxml backend strips
-markup to plain text. A \textit{search text} field is then constructed by
-concatenating the title (repeated three times for downstream emphasis),
-the standfirst, and the body, providing a single string for all NLP stages.
+\textbf{Stage 2 (Preprocessing):} Article bodies are returned as HTML; \texttt{BeautifulSoup}, with an \texttt{lxml} backend, strips the markup to plain text. A \textit{search text} field is then constructed by concatenating the title (repeated three times for downstream emphasis), the standfirst, and the body, providing a single string for all NLP stages.
 
-\textbf{Stage 3 (Named Entity Recognition).}
-SpaCy's \texttt{en\_core\_web\_sm}~\cite{spacy2} is applied to the first
-5\,000 characters of each article, extracting organisations (ORG),
-geopolitical entities (GPE), persons (PERSON), events (EVENT), and
-nationalities (NORP).
+\textbf{Stage 3 (Named Entity Recognition):} spaCy's \texttt{en\_core\_web\_sm}~\cite{spacy2} is applied to the first 5000 characters of each article, extracting Organisation (ORG), Geopolitical Entity (GPE), Person (PERSON), Event (EVENT), and Nationalities or Religious or Political Groups (NORP) spans.
 
-\textbf{Stage 4 (Classification).}
-A two-stage classifier (Sec.~\ref{sec:ai}) assigns each article to one of
-five threat categories: \emph{Cyber}, \emph{Geopolitical}, \emph{Terrorism},
-\emph{Disinformation}, and \emph{Critical Infrastructure}.
+\textbf{Stage 4 (Classification):} A two-stage classifier (Sec.~\ref{subsec:cls}) assigns each article to one of five threat categories: \emph{Cyber}, \emph{Geopolitical}, \emph{Terrorism}, \emph{Disinformation}, and \emph{Critical Infrastructure}.
 
-\textbf{Stage 5 (Risk Scoring).}
-Four normalised component scores are combined into a composite risk score
-(Sec.~\ref{sec:risk}), scaled to $[0,10]$ and mapped to four severity labels.
+\textbf{Stage 5 (Risk Scoring):} Four normalised component scores are combined into a composite risk score (Sec.~\ref{sec:risk}), scaled to $[0,10]$ and mapped to four severity labels.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Data Collection}
 \label{sec:data}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
 \subsection{Guardian Open Platform}
 
-The Guardian Open Platform provides free developer-tier access to the full
-text, metadata, and taxonomic tags of all published articles via a REST
-API~\cite{guardianapi}. The \texttt{/search} endpoint accepts keyword queries,
-date ranges, section filters, and a \texttt{show-fields} parameter controlling
-returned fields. Full article body text is available at no cost, making
-this a high-quality and reproducible data source for OSINT prototyping.
+The Guardian Open Platform provides free developer-tier access to article full text, metadata, and taxonomic tags via a Representational State Transfer (REST) API~\cite{guardianapi}. The \texttt{/search} endpoint accepts keyword queries, date ranges, section filters, and a \texttt{show-fields} parameter that controls the returned fields. Full article body text is available at no cost, making this a high-quality and reproducible data source for OSINT prototyping.
 
 \subsection{Corpus Construction}
 
-Table~\ref{tab:queries} lists the 15 threat-oriented query terms. For each
-term, up to three pages of 50 results (150 articles per term) are retrieved
-covering December 2025 to June 2026. After deduplication by Guardian content
-ID, the corpus contains 1,228 unique articles. A 0.25-second inter-request
-delay respects the developer-tier rate limit. Articles with fewer than 50
-body characters (gallery or video-primary content) are dropped after
-preprocessing, accounting for under 5\% of total records.
+Table~\ref{tab:queries} lists the 15 threat-oriented query terms. For each term, up to three pages of 50 results (150 articles per term) are retrieved, covering a 180-day period from December 2025 to June 2026. After deduplication using Guardian content IDs, the corpus contains 1,228 unique articles. A 0.25-second inter-request delay ensures compliance with the developer-tier rate limit. Articles with fewer than 50 body characters, typically gallery or video-primary content, are removed during preprocessing and account for under 5\% of total records.
 
 \begin{table}[ht]
 \centering
@@ -241,7 +162,7 @@ preprocessing, accounting for under 5\% of total records.
 \textbf{Category} & \textbf{Query terms} \\
 \midrule
 Cyber & ransomware, data breach, malware, phishing, \\
-      & DDoS attack, zero-day vulnerability, supply chain attack \\
+      & Distributed Denial of Service (DDoS) attack, zero-day vulnerability, supply chain attack \\
 Geopolitical & espionage, nation state hacking, cyber warfare \\
 Terrorism & terrorism \\
 Disinformation & disinformation, information warfare \\
@@ -252,97 +173,60 @@ Infrastructure & critical infrastructure attack \\
 
 \subsection{Dataset Characteristics}
 
-The Terrorism category dominates with 432 articles (35.2\%), followed by Cyber
-(244, 19.9\%), Critical Infrastructure (215, 17.5\%), Geopolitical (207, 16.9\%),
-Unknown (90, 7.3\%), and Disinformation (40, 3.3\%). This distribution reflects
-both the relative volume of Guardian reporting on each topic and the number of
-query terms per category, with Cyber benefiting from the larger number of targeted
-search terms. The most represented sections are \texttt{world}, \texttt{technology},
-and \texttt{uk-news}, with a mean article word count of approximately 650.
+The resulting category distribution is shown in Fig.~\ref{fig:catdist}. Terrorism is the largest category, followed by Cyber, Critical Infrastructure, Geopolitical, Unknown, and Disinformation. This pattern reflects both the relative volume of Guardian reporting on each topic and the number of query terms per category, with Cyber benefiting from the larger number of targeted search terms. The most represented sections are \texttt{world}, \texttt{technology}, and \texttt{uk-news}, with a mean article word count of approximately 650.
 
-% ─────────────────────────────────────────────────────────────────────────────
-\section{AI and Analytical Methods}
-\label{sec:ai}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
+% \section{Artificial Intelligence and Analytical Methods}
+\section{Methodology}
+\label{sec:methodology}
+% 
 
 \subsection{Named Entity Recognition}
 
-SpaCy's statistical NER pipeline identifies named spans within article text and
-assigns them to entity types. \texttt{en\_core\_web\_sm} (12\,MB, CPU-only)
-achieves an F1 of approximately 0.85 on OntoNotes~\cite{spacy2}. Processing is
-limited to the first 5\,000 characters per article to bound runtime; the title
-and standfirst, which are most informationally dense, always fall within this
-window. Entity extraction serves two purposes: (i) it provides structured
-metadata for the threat report, identifying which organisations and countries
-are implicated in each item; and (ii) it contributes a risk signal, since
-articles naming more distinct actors tend to describe more concrete, attributable
-threats.
+spaCy's statistical NER pipeline identifies named spans within article text and assigns them to entity types. The \texttt{en\_core\_web\_sm} model (12 MB, CPU-only) achieves an F1 score of approximately 0.85 on OntoNotes~\cite{spacy2,ontonotes2013}. To bound runtime, processing is limited to the first 5000 characters of each article; the title and standfirst, typically the most informationally dense fields, always fall within this window. Entity extraction serves two purposes: (i) it provides structured metadata for the threat report by identifying which organisations and countries are implicated in each item; and (ii) it contributes a risk signal, since articles naming more distinct actors tend to describe more concrete, attributable threats.
 
 \subsection{Threat Classification}
 \label{subsec:cls}
 
-The classifier operates in two stages.
+Classification proceeds in two stages.
 
-\textbf{Stage 1: Keyword classifier (all 1,228 articles).}
-For each article, the normalised keyword density $K_c$ for category $c$ is
+\textbf{Stage 1: Keyword classifier (all 1,228 articles):} For each category $c$, keyword density is
 \begin{equation}
   K_c = \frac{\sum_{k \in \mathcal{K}_c} \mathrm{count}(k,\,\hat{t})}{|\hat{t}|}
   \label{eq:keyword}
 \end{equation}
-where $\mathcal{K}_c$ is the keyword set for category $c$, $\hat{t}$ is the
-lowercased search text, and $|\hat{t}|$ denotes word count. The article is
-assigned to $\arg\max_c K_c$. A normalised score
-$S_{\mathrm{kw}} = \min(K_{c^*}/0.05,\;1.0)$ clips at a reference density of
-0.05 hits per word.
+where $\mathcal{K}_c$ denotes category keywords, $\hat{t}$ the lowercased search text, and $|\hat{t}|$ the word count. The label is $c^*=\arg\max_c K_c$, with keyword score $S_{\mathrm{kw}} = \min(K_{c^*}/0.05,\;1.0)$ capped at a reference density of 0.05 hits per word.
 
-\textbf{Stage 2: Zero-shot NLI classifier (top-50 by keyword score).}
-\texttt{cross-encoder/nli-MiniLM2-L6-H768}~\cite{reimers2019sentencebert} is
-applied in zero-shot classification mode~\cite{yin2019benchmark}. The model
-scores each of the five category labels as a natural language hypothesis against
-the article text, returning a confidence distribution. This stage runs on the
-top-50 articles only, bounding prototype runtime at approximately two seconds
-per article on a CPU. The highest-confidence label and its score are stored
-alongside the keyword result, providing a consistency check and an example of
-how a learned model can complement rule-based classification.
+\textbf{Stage 2: Zero-shot NLI classifier (top-50 by keyword score):} The pipeline uses the NLI cross-encoder model~\cite{reimers2019sentencebert}, \texttt{cross-encoder/nli-MiniLM2-L6-H768}, in zero-shot mode~\cite{yin2019benchmark}. For each article, the model evaluates each category label as a natural-language hypothesis and returns a confidence distribution. To bound runtime, this stage is restricted to the top-50 articles, requiring approximately two seconds per article on a CPU. The highest-confidence label and score are stored with the keyword result, enabling consistency checks and illustrating how learned models can complement rule-based classification.
 
 \subsection{Sentiment Analysis}
 
-VADER~\cite{hutto2014vader} produces a compound score $v \in [-1,\,1]$ for
-the article headline and standfirst. A sentiment risk component is defined as
+Valence Aware Dictionary and sEntiment Reasoner (VADER)~\cite{hutto2014vader} produces a compound score $v \in [-1,\,1]$ for each article headline and standfirst. The sentiment-risk component is defined as
 \begin{equation}
   S_{\mathrm{sent}} = \frac{1 - v}{2}
   \label{eq:sentiment}
 \end{equation}
-so that highly negative text ($v \approx -1$) yields $S_{\mathrm{sent}} \approx 1$
-and neutral-to-positive text yields $S_{\mathrm{sent}} \approx 0$. VADER was
-chosen over a transformer-based sentiment model because it runs in milliseconds
-on any hardware, requires no additional model download, and produces scores that
-are directly interpretable by practitioners.
+so that highly negative text ($v \approx -1$) yields $S_{\mathrm{sent}} \approx 1$, neutral text maps to $0.5$, and positive text approaches $0$. VADER was chosen over a transformer-based sentiment model because it runs in milliseconds on commodity hardware, requires no additional model download, and produces directly interpretable scores.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Risk Assessment Framework}
 \label{sec:risk}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
 \subsection{Component Scores}
 
-Four normalised scores, each in $[0,\,1]$, contribute to the composite:
+Four normalised component scores, each in $[0,\,1]$, contribute to the composite risk score:
 
 \begin{enumerate}[leftmargin=*,noitemsep]
-  \item \textbf{Keyword score} $S_{\mathrm{kw}}$: normalised keyword density
-        (Eq.~\ref{eq:keyword}).
-  \item \textbf{Sentiment score} $S_{\mathrm{sent}}$: VADER negativity
-        (Eq.~\ref{eq:sentiment}).
-  \item \textbf{Recency score} $S_{\mathrm{rec}}$: exponential decay from
-        publication date with a 30-day half-life,
+  \item \textbf{Keyword score} $S_{\mathrm{kw}}$: normalised keyword density (Eq.~\ref{eq:keyword}).
+  \item \textbf{Sentiment score} $S_{\mathrm{sent}}$: VADER-derived negativity (Eq.~\ref{eq:sentiment}).
+  \item \textbf{Recency score} $S_{\mathrm{rec}}$: exponential decay from publication date with a 30-day half-life,
         \begin{equation}
           S_{\mathrm{rec}} = \exp\!\left(-\frac{\ln 2 \cdot \Delta t}{30}\right),
           \label{eq:recency}
         \end{equation}
         where $\Delta t$ is the article age in days.
-  \item \textbf{Entity score} $S_{\mathrm{ent}}$: normalised named entity
-        count, $\min(n_e / n_{\max},\;1.0)$, where $n_e$ is the article's
-        entity count and $n_{\max}$ is the corpus maximum.
+  \item \textbf{Entity score} $S_{\mathrm{ent}}$: normalised named entity count, $\min(n_e / n_{\max},\;1.0)$, where $n_e$ is the article's entity count and $n_{\max}$ is the corpus maximum.
 \end{enumerate}
 
 \subsection{Composite Risk Score}
@@ -356,12 +240,7 @@ The final risk score is
     \times M_c \times 10,
   \label{eq:risk}
 \end{equation}
-where $M_c$ is a category-specific severity multiplier: Terrorism ($1.5$),
-Critical Infrastructure ($1.4$), Cyber ($1.3$), Geopolitical ($1.2$),
-Disinformation ($1.0$), and Unknown ($0.8$). These multipliers encode domain
-knowledge about the typical operational impact of each category; they are a
-deliberate design choice, not a learned parameter. The score is clipped to
-$[0,\,10]$ and mapped to four severity labels (Table~\ref{tab:severity}).
+where $M_c$ is a category-specific severity multiplier: Terrorism ($1.5$), Critical Infrastructure ($1.4$), Cyber ($1.3$), Geopolitical ($1.2$), Disinformation ($1.0$), and Unknown ($0.8$). These multipliers encode domain knowledge about the typical operational impact of each category; they are a deliberate design choice, not learned parameters. The score is clipped to $[0,\,10]$ and mapped to four severity labels (Table~\ref{tab:severity}).
 
 \begin{table}[ht]
 \centering
@@ -381,183 +260,103 @@ Critical & $[8,\,10]$ & Immediate escalation \\
 
 \subsection{Threat Report Output}
 
-Two artefacts are produced: \texttt{threat\_report.csv} lists all articles
-sorted by descending risk score, with category, severity label, key entities,
-and URL; \texttt{threat\_report.json} provides the same data in a format
-suitable for ingestion by downstream dashboards or SIEM platforms.
-A structured set of per-category \emph{intelligence briefs} additionally
-extracts the two highest-scoring articles per threat type, summarising title,
-score, date, key organisations, and locations.
+The pipeline produces two artefacts. The CSV file, \texttt{threat\_report.csv} (555 KB), lists all articles in descending risk-score order, including category, severity label, key entities, and Uniform Resource Locator (URL). The JSON file, \texttt{threat\_report.json} (832 KB), stores the same records for downstream dashboards or Security Information and Event Management (SIEM) platforms. A structured set of per-category \emph{intelligence briefs} (step 7c in the \texttt{threat\_monitoring.ipynb} notebook) extracts the two highest-scoring articles per threat type and summarises title, score, date, key organisations, and locations.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Prototype Results}
 \label{sec:results}
-% ─────────────────────────────────────────────────────────────────────────────
 
-\subsection{Corpus Overview}
-
-After collection and preprocessing, the corpus contains 1,228 unique articles.
-Fig.~\ref{fig:catdist} shows the per-category distribution. The dominance of
-Terrorism partly reflects the single query term used for that category
-(\emph{terrorism}) matching a large volume of recent Guardian reporting, and
-the category multiplier ($M_c = 1.5$) subsequently amplifying scores for
-high-keyword-density matches.
+This section summarises the prototype's empirical outputs: corpus composition, risk-score distribution, classifier agreement, and sentiment trends.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.9\linewidth]{threat_category_dist.png}
-  \caption{Distribution of 1,228 articles across the five threat categories
-  plus Unknown, from keyword classification.}
+  \includegraphics[width=0.8\linewidth]{threat_category_dist.png}
+  \caption{Distribution of 1,228 articles across the five threat categories plus Unknown, based on keyword classification.}
   \label{fig:catdist}
 \end{figure}
 
+\subsection{Corpus Overview}
+
+The corpus composition in Fig.~\ref{fig:catdist} provides context for the downstream scoring results. In particular, the prevalence of articles classified as Terrorism ($\sim$35\%) interacts with the category multiplier ($M_c = 1.5$), amplifying scores for high-keyword-density matches in that category.
+
+
 \subsection{Risk Score Distribution}
 
-The composite score distribution is right-skewed: 60.8\% of articles fall in
-the Medium range ($[3,\,6)$), with 23.6\% High, 5.1\% Critical, and 10.4\%
-Low. The corpus mean is 5.09 out of 10. Fig.~\ref{fig:scoredist} shows the
-histogram. The highest-scoring articles (scores of 10.0) cover the Golders
-Green terrorist attack and its immediate aftermath in the UK, which combine
-high keyword density, strong sentiment negativity, and short time since
-publication; this behaviour is exactly what the scoring formula is designed
-to produce.
+The composite score distribution is right-skewed: 60.8\% of articles fall in the Medium range ($[3,\,6)$), with 23.6\% in High, 5.1\% in Critical, and 10.4\% in Low. The corpus mean is 5.09 out of 10. Fig.~\ref{fig:scoredist} shows the histogram. The highest-scoring articles (scores of 10.0) cover the Golders Green terrorist attack and its immediate aftermath in the UK~\cite{dodd2026ukTerrorThreatSevere}. These articles combine high keyword density, strong sentiment negativity, and a short elapsed time since publication ($S_{\mathrm{rec}}$ in \eqref{eq:risk}). This ranking follows directly from the scoring formula.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.9\linewidth]{risk_score_dist.png}
-  \caption{Risk score distribution across the corpus. The distribution is
-  right-skewed with a mean of 5.09 and a tail of Critical items (score $\geq8$).}
+  \includegraphics[width=0.94\linewidth]{risk_score_dist.png}
+  \caption{Risk score distribution across the corpus. The distribution is right-skewed, with a mean of 5.09 and a tail of Critical items (score $\geq 8$).}
   \label{fig:scoredist}
 \end{figure}
 
 \subsection{Classifier Comparison}
 
-On the top-50 articles by keyword score, the keyword and NLI classifiers agree
-approximately 75\% of the time. Disagreements arise most often when an article
-has moderate cyber-related keyword density but the zero-shot model correctly
-identifies geopolitical framing (e.g., state-sponsored cyberattack reporting).
-These cases confirm that the two stages are complementary: the keyword classifier
-provides fast, fully deterministic triage, while the NLI stage captures semantic
-context that keyword density alone misses. It is also worth noting a known
-limitation: articles covering the Ukraine conflict are occasionally scored as
-high-risk Terrorism due to dense use of attack-related vocabulary; finer
-subcategory distinctions would reduce this artefact in a production system.
+For the top 50 articles by keyword score, the keyword and NLI classifiers agree approximately 75\% of the time. Disagreements arise most often when an article has a moderate density of cyber-related keywords but the zero-shot model assigns a geopolitical framing (e.g., state-sponsored cyberattack reporting). These cases confirm that the two stages are complementary: the keyword classifier provides fast, fully deterministic triage, while the NLI stage captures semantic context that keyword density alone misses. A known limitation is that articles covering the war in Ukraine are occasionally scored as high-risk Terrorism items because they contain dense attack-related vocabulary; more granular subcategories would reduce this artefact in a production system.
 
 \subsection{Risk versus Sentiment}
 
-Fig.~\ref{fig:scatter} shows the relationship between composite risk score and
-VADER sentiment negativity across the corpus. High-risk articles cluster toward
-high negativity, but the spread is substantial, confirming that sentiment is a
-meaningful but non-dominant signal. Recency and keyword density introduce
-the spread, which is the intended behaviour of the composite formula.
+Fig.~\ref{fig:scatter} shows the relationship between composite risk score and VADER sentiment negativity across the corpus, with points coloured by threat category. High-risk articles cluster at higher negativity values, but the spread is substantial, confirming that sentiment is a meaningful but non-dominant signal. Variation in recency and keyword density introduces this spread, which is the intended behaviour of the composite formula.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.9\linewidth]{risk_vs_sentiment.png}
-  \caption{Composite risk score versus VADER sentiment negativity. Points are
-  coloured by threat category. High-risk articles cluster at high negativity,
-  but keyword density and recency introduce significant spread.}
+  \includegraphics[width=0.8\linewidth]{risk_vs_sentiment.png}
+  \caption{Risk score versus VADER sentiment negativity across the corpus.}
   \label{fig:scatter}
 \end{figure}
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Key Considerations}
 \label{sec:considerations}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
 \subsection{Data Quality and Limitations}
 
-The prototype relies on a single English-language outlet. The Guardian's
-editorial decisions determine what is published; emerging threats first
-reported in non-English sources or specialist technical forums (threat
-intelligence blogs, vulnerability disclosure lists, dark-web forums) are
-invisible to the system. A robust production pipeline should integrate
-multiple independent sources, including CISA advisories and CVE
-feeds~\cite{cvss2019}, and apply cross-lingual NLP.
+The prototype relies on a single English-language news outlet. The Guardian's editorial decisions determine what is published; emerging threats first reported in non-English sources or specialist technical forums, such as threat intelligence blogs, vulnerability disclosure lists, and dark-web forums, are not captured by the system. A production pipeline should integrate multiple independent sources, including Cybersecurity and Infrastructure Security Agency (CISA) advisories and Common Vulnerabilities and Exposures (CVE) feeds~\cite{cvss2019}, and apply cross-lingual NLP.
 
-Keyword classifiers are inherently vocabulary-bound: novel terminology (a
-newly coined attack name or a zero-day before public disclosure) will not
-match until the taxonomy is updated. Zero-shot NLI partially mitigates this
-but is limited by its own training distribution. The scoring weights are
-hand-tuned rather than data-driven; without labelled ground truth, there is
-no objective basis for claiming they are optimal, and different weighting
-configurations would yield different rankings.
+Keyword classifiers are inherently vocabulary-bound: novel terminology, such as a newly coined attack name or a zero-day before public disclosure, will not match until the taxonomy is updated. Zero-shot NLI partially mitigates this issue but remains constrained by its training distribution. The scoring weights are hand-tuned rather than data-driven; without labelled ground truth, there is no objective basis for claiming that they are optimal, and different weighting configurations would yield different rankings.
 
 \subsection{Ethical and Legal Considerations}
 
-All data is retrieved under The Guardian's developer API terms, which permit
-non-commercial use. No personal data beyond article bylines is processed.
-However, automated threat labelling at scale carries the risk of generating
-false positives that, if acted upon without human review, could cause harm
-to individuals or organisations. A human-in-the-loop review step is essential
-before any score-driven operational action is taken. The system must not be
-applied to monitoring individuals, and any production deployment should
-include bias audits to ensure no particular group is systematically
-over-represented in high-severity labels.
+All data is retrieved under The Guardian's developer API terms, which permit non-commercial use. The prototype processes no personal data beyond article bylines. However, automated threat labelling at scale can generate false positives that, if acted upon without human review, could harm individuals or organisations. A human-in-the-loop review step is therefore essential before any score-driven operational action is taken. The system should not be used to monitor individuals, and any production deployment should include bias audits to ensure that no group is systematically over-represented in high-severity labels.
 
 \subsection{Scalability and Deployment}
 
-The prototype runs on a standard laptop with no GPU. For production deployment,
-three architectural changes are required: (i) a scheduled ingestion pipeline
-(e.g., Apache Airflow) replacing the manual notebook execution; (ii) a vector
-database (e.g., Weaviate or Pinecone) replacing CSV files, enabling semantic
-search and similarity-based deduplication across a growing corpus; and
-(iii) a fine-tuned cybersecurity NER and classification model replacing the
-general-purpose small models. Table~\ref{tab:scalability} summarises these
-transitions.
+The prototype runs on a standard laptop without GPU acceleration. Production deployment would require three architectural changes: (i) replacing manual notebook execution with a scheduled ingestion pipeline, such as Apache Airflow; (ii) replacing CSV files with a vector database, such as Weaviate or Pinecone, to support semantic search and similarity-based deduplication as the corpus grows; and (iii) replacing the small, general-purpose models with fine-tuned cybersecurity NER and classification models. Table~\ref{tab:scalability} summarises these transitions.
 
 \begin{table}[ht]
 \centering
-\caption{Scalability roadmap: prototype versus production}
+\caption{Scalability steps: prototype versus production}
 \label{tab:scalability}
 \begin{tabular}{@{}lll@{}}
 \toprule
 \textbf{Component} & \textbf{Prototype} & \textbf{Production} \\
 \midrule
-Ingestion     & Manual notebook run      & Airflow DAG, multi-source \\
-Storage       & JSON + CSV files         & Vector DB (Weaviate) \\
-NER model     & spaCy \texttt{sm} (12 MB) & Fine-tuned cybersec NER \\
-Classifier    & Keyword + ZS-NLI sample  & Fine-tuned transformer \\
+Ingestion     & Manual notebook run      & Airflow Directed Acyclic Graph (DAG), multi-source \\
+Storage       & JSON + CSV files         & Vector database (Weaviate / Pinecone) \\
+NER model     & spaCy \texttt{sm} (12 MB) & Fine-tuned cybersecurity NER model \\
+Classifier    & Keyword + zero-shot NLI sample & Fine-tuned transformer \\
 Risk scoring  & Hand-tuned weights       & Active-learning feedback \\
 Output        & Static CSV/JSON          & Live Streamlit dashboard \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A natural long-term evolution is toward \emph{agentic AI}: autonomous agents
-that continuously monitor multiple sources, escalate newly identified high-risk
-items, coordinate analyst workflows, and refine scoring parameters from
-feedback. This architecture, incorporating agent-based reasoning and
-multi-source coverage across surface, deep, and open-web channels, represents
-the production vision that this prototype is designed to motivate and de-risk.
+A later version could adopt \emph{agentic AI}, using autonomous agents to monitor multiple sources, escalate newly identified high-risk items, coordinate analyst workflows, and refine scoring parameters from analyst feedback. Such a design would add agent-based reasoning and broaden source coverage across surface-web, deep-web, and other open-source channels.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
-This paper presented a prototype OSINT threat monitoring system demonstrating
-an end-to-end pipeline from API ingestion to ranked threat reports, using only
-CPU-friendly, freely available NLP tools. Over 1,228 articles, the pipeline
-achieves a corpus mean risk score of 5.09, correctly surfaces Critical events
-with scores up to 10.0, and produces structured intelligence briefs across
-five threat categories. The two-stage classifier requires no labelled data, and
-the composite risk score is fully interpretable. Key limitations, including
-single-source coverage and hand-tuned weights, are well-understood starting
-points for a production system.
+This report has presented a prototype OSINT threat monitoring system that runs an end-to-end pipeline from API ingestion to ranked threat reports, using only CPU-friendly, freely available NLP tools. Across 1,228 articles, the pipeline achieves a corpus mean risk score of 5.09, identifies Critical items with scores up to 10.0, and produces structured intelligence briefs across five threat categories. The two-stage classifier requires no labelled data, and the composite risk score is fully interpretable. The main limitations are single-source coverage, English-only processing, and hand-tuned weights.
 
-Future work falls into five directions: (i) integrating CISA advisories and CVE
-feeds for enriched technical context; (ii) mapping extracted entities to MITRE
-ATT\&CK techniques~\cite{strom2018mitre} for structured threat attribution;
-(iii) building a knowledge graph of threat actors, tools, and campaigns;
-(iv) applying active learning with analyst feedback to refine classification
-and scoring weights; and (v) developing a real-time Streamlit dashboard as
-the operational interface, evolving over time toward a fully agentic
-architecture capable of autonomous multi-source OSINT collection and triage.
+Future work should focus on: (i) integrating CISA advisories and CVE feeds for enriched technical context; (ii) mapping extracted entities to the MITRE Adversarial Tactics, Techniques, and Common Knowledge (ATT\&CK) framework~\cite{strom2018mitre} for structured threat attribution; (iii) building a knowledge graph of threat actors, tools, and campaigns; (iv) applying active learning with analyst feedback to refine classification and scoring weights; and (v) developing a real-time Streamlit dashboard as the operational interface. Over time, this could evolve into a fully agentic architecture capable of autonomous multi-source OSINT collection and triage.
 
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 \bibliographystyle{IEEEtran}
 \bibliography{main}
-% ─────────────────────────────────────────────────────────────────────────────
+% 
 
 \end{document}
