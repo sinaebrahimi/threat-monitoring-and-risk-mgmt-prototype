@@ -98,7 +98,7 @@ FUNCTION {default.is.forced.et.al} { #1 }
 % Note: There are many instances of references in IEEE journals which have
 % a very large number of authors as well as instances in which "et al." is
 % used profusely.
-FUNCTION {default.max.num.names.before.forced.et.al} { #3 }
+FUNCTION {default.max.num.names.before.forced.et.al} { #2 }
 
 
 % The number of names that will be shown with a forced "et al.".
